@@ -128,7 +128,7 @@ export default function ImportPage() {
       const label = getWeekLabel(isNaN(chosenDate.getTime()) ? new Date() : chosenDate)
       const id = 'imp_' + Date.now()
 
-      await saveImport({ id, label, date: chosenDate.toISOString(), count: records.length, data: records.map(slimRecord as any) })
+      await saveImport({ id, label, import_date: chosenDate.toISOString(), count: records.length, data: records.map(slimRecord as any) as any })
       router.push('/dashboard')
     } catch (e: any) {
       setError('Opslaan mislukt: ' + e.message)

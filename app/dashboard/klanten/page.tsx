@@ -35,7 +35,7 @@ export default function KlantenPage() {
   const [page, setPage] = useState(1)
 
   const view = useMemo(() => user?.role === 'admin' ? allData : allData.filter(d => d.vestiging === user?.vestiging), [allData, user])
-  const vests = useMemo(() => [...new Set(allData.map(d => d.vestiging).filter(Boolean))].sort(), [allData])
+  const vests = useMemo(() => Array.from(new Set(allData.map(d => d.vestiging).filter(Boolean))).sort(), [allData])
   const hasOmzet = allData.some(d => d.omzet > 0)
 
   const filtered = useMemo(() => {
