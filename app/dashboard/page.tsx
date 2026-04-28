@@ -65,7 +65,7 @@ export default function OverviewPage() {
     return d
   }, [view, search, vestFilter, segFilter, kanaalFilter, fromDate, toDate])
 
-  const vests = useMemo(() => [...new Set(allData.map(d => d.vestiging).filter(Boolean))].sort(), [allData])
+  const vests = useMemo(() => Array.from(new Set(allData.map(d => d.vestiging).filter(Boolean))).sort(), [allData])
   const dates = useMemo(() => allData.map(d => d.last).filter(Boolean).sort((a, b) => a!.getTime() - b!.getTime()), [allData])
 
   const tot = filtered.length
