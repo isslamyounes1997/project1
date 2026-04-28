@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@/app/context/AuthContext'
 import { useData } from '@/app/context/DataContext'
@@ -14,7 +14,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
 
   useEffect(() => {
-    if (!user) { router.replace('/login'); return }
+    if (!user) { window.location.href = '/login'; return }
     loadFromServer()
   }, [user])
 

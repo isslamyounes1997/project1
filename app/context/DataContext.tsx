@@ -49,7 +49,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
     const slim = {
       id: imp.id,
       label: imp.label,
-      import_date: imp.import_date,
+      import_date: imp.date,
       count: imp.count,
       data: imp.data.map(slimRecord as any),
     }

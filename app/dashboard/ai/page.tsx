@@ -58,7 +58,7 @@ export default function AiPage() {
   const tot = allData.length
   const ret = allData.filter(d => d.orders > 1).length
   const web = allData.filter(d => d.kanaal === 'website').length
-  const vests = Array.from(new Set(allData.map(d => d.vestiging).filter(Boolean)))
+  const vests = [...new Set(allData.map(d => d.vestiging).filter(Boolean))]
 
   const send = async (text: string) => {
     if (!text.trim() || loading) return
