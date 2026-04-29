@@ -46,22 +46,38 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, [rebuild])
 
   const saveImport = useCallback(async (imp: ImportRecord) => {
-    const slim = {
-      id: imp.id,
-      label: imp.label,
-      import_date: imp.date,
-      count: imp.count,
-      data: imp.data.map(slimRecord as any),
+    const CHUNK_SIZE = 5000
+    const slimData = imp.data.map(slimRecord as any)
+    const chunks: any[][] = []
+    for (let i = 0; i < slimData.length; i += CHUNK_SIZE) {
+      chunks.push(slimData.slice(i, i + CHUNK_SIZE))
     }
-    const res = await fetch('/api/imports', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(slim),
-    })
-    if (!res.ok) {
-      const err = await res.json()
-      throw new Error(err.error || 'Opslaan mislukt')
+
+    // Stuur chunk voor chunk naar de server
+    for (let i = 0; i < chunks.length; i++) {
+      const slim = {
+        id: i === 0 ? imp.id : `${imp.id}_chunk_${i}`,
+        label: imp.label,
+        import_date: imp.date || imp.import_date,
+        count: i === 0 ? imp.count : chunks[i].length,
+        data: chunks[i],
+        parent_id: i === 0 ? null : imp.id,
+        chunk_index: i,
+        chunk_total: chunks.length,
+      }
+      const res = await fetch('/api/imports', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(slim),
+      })
+      if (!res.ok) {
+        const text = await res.text()
+        let msg = text
+        try { msg = JSON.parse(text).error } catch {}
+        throw new Error(msg || 'Opslaan mislukt')
+      }
     }
+
     const updated = [...importHistory, imp]
     setImportHistory(updated)
     rebuild(updated)

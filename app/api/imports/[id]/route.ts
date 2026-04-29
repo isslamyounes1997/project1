@@ -11,6 +11,9 @@ function getSupabase() {
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const supabase = getSupabase()
+    // Verwijder chunks eerst
+    await supabase.from('imports').delete().eq('parent_id', params.id)
+    // Dan de hoofdrij
     const { error } = await supabase.from('imports').delete().eq('id', params.id)
     if (error) throw error
     return NextResponse.json({ success: true })

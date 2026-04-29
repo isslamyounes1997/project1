@@ -187,24 +187,24 @@ export default function ImportPage() {
           <div style={{ display: 'flex', gap: 16, marginBottom: 10, flexWrap: 'wrap' }}>
             {[['var(--green)','Automatisch herkend'],['var(--amber)','Controleer even'],['var(--border2)','Niet gebruikt']].map(([c,l]) => <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--text2)', fontWeight: 500 }}><div style={{ width: 9, height: 9, borderRadius: 3, background: c }} />{l}</div>)}
           </div>
-          <div style={{ display: 'grid', gap: 8, marginBottom: '1.5rem' }}>
+          <div style={{ display: 'grid', gap: 6, marginBottom: '1.5rem' }}>
             {headers.map((hdr, idx) => {
               const m = mapping[idx]
               const sample = rows.slice(0, 2).map(r => r[idx] || '').filter(Boolean).join(', ')
               const isOk = m?.field !== '__skip__' && m?.confidence === 'high'
               const isWarn = m?.field !== '__skip__' && m?.confidence !== 'high'
               return (
-                <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 36px 1fr 28px', alignItems: 'center', gap: 10, background: isOk ? 'var(--green-bg)' : isWarn ? 'var(--amber-bg)' : '#fff', border: `1.5px solid ${isOk ? 'var(--green)' : isWarn ? 'var(--amber)' : 'var(--border)'}`, borderRadius: 10, padding: '10px 14px' }}>
-                  <div>
+                <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: 8, background: isOk ? 'var(--green-bg)' : isWarn ? 'var(--amber-bg)' : '#fff', border: `1.5px solid ${isOk ? 'var(--green)' : isWarn ? 'var(--amber)' : 'var(--border)'}`, borderRadius: 10, padding: '8px 12px' }}>
+                  <div style={{ width: 160, flexShrink: 0 }}>
                     <div style={{ fontSize: 12, fontWeight: 600, fontFamily: 'DM Mono, monospace', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{hdr}</div>
-                    <div style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'DM Mono, monospace', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sample}</div>
+                    <div style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'DM Mono, monospace', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sample}</div>
                   </div>
-                  <div style={{ textAlign: 'center', color: 'var(--text3)', fontSize: 13 }}>→</div>
-                  <select value={m?.field || '__skip__'} onChange={e => updateMap(idx, e.target.value)} style={{ width: '100%', padding: '6px 9px', border: '1.5px solid var(--border2)', borderRadius: 8, fontSize: 12, fontFamily: 'inherit', color: 'var(--text)', background: '#fff', outline: 'none', cursor: 'pointer' }}>
+                  <div style={{ color: 'var(--text3)', fontSize: 13, flexShrink: 0 }}>→</div>
+                  <select value={m?.field || '__skip__'} onChange={e => updateMap(idx, e.target.value)} style={{ flex: 1, padding: '6px 9px', border: '1.5px solid var(--border2)', borderRadius: 8, fontSize: 12, fontFamily: 'inherit', color: 'var(--text)', background: '#fff', outline: 'none', cursor: 'pointer', minWidth: 0 }}>
                     <option value="__skip__">— Niet gebruiken —</option>
                     {FIELDS.map(f => <option key={f.key} value={f.key}>{f.label}</option>)}
                   </select>
-                  <div style={{ textAlign: 'center', fontSize: 15 }}>{m?.field === '__skip__' ? '⬜' : m?.confidence === 'high' ? '✅' : '⚠️'}</div>
+                  <div style={{ fontSize: 15, flexShrink: 0, width: 20, textAlign: 'center' }}>{m?.field === '__skip__' ? '⬜' : m?.confidence === 'high' ? '✅' : '⚠️'}</div>
                 </div>
               )
             })}
