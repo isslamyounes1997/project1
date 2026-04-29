@@ -80,7 +80,7 @@ export default function GeschiedenisPage() {
                 <tr key={imp.id} style={{ background: isLast ? 'rgba(108,63,255,.02)' : '' }}>
                   <td style={{ padding: '10px 14px', borderBottom: '1px solid var(--border)', fontWeight: 600 }}>
                     {imp.label} {isLast && <span style={{ fontSize: 10, padding: '2px 8px', background: 'rgba(108,63,255,.1)', color: 'var(--accent)', borderRadius: 20, marginLeft: 6 }}>Laatste</span>}
-                    <div style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'DM Mono, monospace', marginTop: 2 }}>{new Date(imp.import_date).toLocaleDateString('nl-NL')}</div>
+                    <div style={{ fontSize: 10, color: 'var(--text3)', fontFamily: 'DM Mono, monospace', marginTop: 2 }}>{new Date(imp.date).toLocaleDateString('nl-NL')}</div>
                   </td>
                   <td style={{ padding: '10px 14px', borderBottom: '1px solid var(--border)', fontFamily: 'DM Mono, monospace', fontWeight: 700 }}>{imp.count}</td>
                   <td style={{ padding: '10px 14px', borderBottom: '1px solid var(--border)', fontFamily: 'DM Mono, monospace', color: 'var(--text2)' }}>{st.nieuw}</td>

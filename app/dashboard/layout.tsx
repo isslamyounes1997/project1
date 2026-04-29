@@ -1,16 +1,14 @@
 'use client'
 import { useEffect } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@/app/context/AuthContext'
 import { useData } from '@/app/context/DataContext'
-import { AuthProvider } from '@/app/context/AuthContext'
 import { DataProvider } from '@/app/context/DataContext'
 
 function DashboardContent({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth()
   const { loadFromServer, loading } = useData()
-  const router = useRouter()
   const pathname = usePathname()
 
   useEffect(() => {
@@ -96,10 +94,8 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthProvider>
-      <DataProvider>
-        <DashboardContent>{children}</DashboardContent>
-      </DataProvider>
-    </AuthProvider>
+    <DataProvider>
+      <DashboardContent>{children}</DashboardContent>
+    </DataProvider>
   )
 }

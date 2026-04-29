@@ -9,6 +9,7 @@ export type ImportRecord = {
   id: string
   label: string
   import_date: string
+  date: string
   count: number
   data: SlimRecord[]
 }
